@@ -10,26 +10,36 @@ A small collection of independent [Claude](https://claude.com/claude-code) **ski
 
 ## Install
 
-These are **skills**, not a plugin — install whichever you want individually.
+These are standard [`SKILL.md`](https://code.claude.com/docs/en/skills) skills, so they work across any agent that reads them — Claude Code, Codex, Cursor, Antigravity, Copilot, and others.
 
-**Per-user (available in every project):**
+### Recommended: `npx skills` (cross-runtime)
+
+The [`skills`](https://github.com/vercel-labs/skills) CLI installs into whichever agents you have, auto-detecting them. No clone needed.
 
 ```bash
-# clone, then copy the skill(s) you want into your Claude skills dir
+# all three skills, project-level (./.claude/skills, ./.cursor/skills, ...)
+npx skills add nopefallacy/seo-skills
+
+# global — available in every project (~/.claude/skills, ...)
+npx skills add nopefallacy/seo-skills -g
+
+# target specific runtimes
+npx skills add nopefallacy/seo-skills -a claude-code -a cursor -a codex
+
+# just one skill
+npx skills add https://github.com/nopefallacy/seo-skills/tree/main/skills/seo-audit
+```
+
+### Manual
+
+```bash
 git clone https://github.com/nopefallacy/seo-skills.git
-cp -R seo-skills/skills/seo-audit      ~/.claude/skills/seo-audit
-cp -R seo-skills/skills/seo-optimize   ~/.claude/skills/seo-optimize
-cp -R seo-skills/skills/site-launch-kit ~/.claude/skills/site-launch-kit
+cp -R seo-skills/skills/seo-audit ~/.claude/skills/seo-audit   # per-user
+# or, per-project:
+mkdir -p .claude/skills && cp -R seo-skills/skills/seo-audit .claude/skills/seo-audit
 ```
 
-**Per-project (checked into a single repo):**
-
-```bash
-mkdir -p .claude/skills
-cp -R seo-skills/skills/seo-audit .claude/skills/seo-audit
-```
-
-Restart Claude Code (or run `/doctor`) and the skills will be picked up automatically. Invoke with `/seo-audit` or `/seo-optimize`, or just describe the task — Claude triggers the matching skill from its description.
+Restart your agent (or run `/doctor` in Claude Code). Invoke with `/seo-audit` or `/seo-optimize`, or just describe the task — the agent triggers the matching skill from its description.
 
 ## Requirements
 
